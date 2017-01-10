@@ -344,6 +344,7 @@ RCT_EXPORT_METHOD(updateContact:(NSDictionary *)contactData callback:(RCTRespons
   NSString *department = [contactData valueForKey:@"department"];
   NSString *jobTitle = [contactData valueForKey:@"jobTitle"];
   NSString *note = [contactData valueForKey:@"note"];
+  NSString *thumbnailPath = [contactData valueForKey:@"thumbnailPath"];
   ABRecordSetValue(record, kABPersonFirstNameProperty, (__bridge CFStringRef) givenName, &error);
   ABRecordSetValue(record, kABPersonLastNameProperty, (__bridge CFStringRef) familyName, &error);
   ABRecordSetValue(record, kABPersonMiddleNameProperty, (__bridge CFStringRef) middleName, &error);
@@ -387,6 +388,9 @@ RCT_EXPORT_METHOD(updateContact:(NSDictionary *)contactData callback:(RCTRespons
   }
   ABRecordSetValue(record, kABPersonEmailProperty, multiEmail, nil);
   CFRelease(multiEmail);
+    
+  NSData *data = [NSData dataWithContentsOfURL: [NSURL URLWithString:thumbnailPath]];
+  ABPersonSetImageData(record, (__bridge CFDataRef) data, nil);
 
   ABAddressBookSave(addressBookRef, &error);
   if (error != NULL)
