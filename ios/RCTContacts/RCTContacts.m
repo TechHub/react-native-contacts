@@ -1,6 +1,6 @@
 #import <AddressBook/AddressBook.h>
 #import <UIKit/UIKit.h>
-#import <React/RCTContacts.h>
+#import "RCTContacts.h"
 
 @implementation RCTContacts
 
